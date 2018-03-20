@@ -1,16 +1,15 @@
-const Router = require('koa-router')
-const { health } = require('./services')
+const Router = require("koa-router");
+const { health, fulfillment } = require("./services");
 
-const noLogs = new Router() // exclude koa logger to not spam console logs
+const noLogs = new Router(); // exclude koa logger to not spam console logs
 
-noLogs.get('/', health)
+noLogs.get("/", health);
 
-// const router = new Router()
+const router = new Router();
 
-// router.get('/signin', auth.signin)
-// router.post('/callback', auth.callback)
+router.post("/fulfillment", fulfillment);
 
 module.exports = {
-  noLogs
-  // router
-}
+  noLogs,
+  router
+};

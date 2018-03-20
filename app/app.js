@@ -1,36 +1,35 @@
-let env = process.env.NODE_ENV || 'development'
+let env = process.env.NODE_ENV || "development";
 
 // istanbul ignore next
-if (env !== 'test') {
-  require('dotenv-safe').config({ silent: true }) // eslint-disable-line
-  env = process.env.NODE_ENV || 'development'
+if (env !== "test") {
+  require("dotenv-safe").config({ silent: true }); // eslint-disable-line
+  env = process.env.NODE_ENV || "development";
 }
 
-const koa = require('koa')
-const winston = require('winston') 
-const koaLogger = require('koa-logger')
-const { noLogs } = require('./router.js')
+const koa = require("koa");
+const winston = require("winston");
+const koaLogger = require("koa-logger");
+const { noLogs, router } = require("./router.js");
 
-const app = (module.exports = koa())
-const port = process.env.PORT || 8080
-
-// istanbul ignore next
-app.use(noLogs.middleware())
+const app = (module.exports = koa());
+const port = process.env.PORT || 8080;
 
 // istanbul ignore next
-if (env !== 'test') {
+app.use(noLogs.middleware());
+
+// istanbul ignore next
+if (env !== "test") {
   // only add koa logger for environments other than test
-  app.use(koaLogger())
+  app.use(koaLogger());
 }
 
-// app.use(unsecured.middleware());
-// app.use(secured.middleware());
+app.use(router.middleware());
 
 // istanbul ignore next
 if (!module.parent) {
-  app.listen(port)
+  app.listen(port);
   winston.log(
-    'info',
+    "info",
     `App is running under env '${env}', listening on port ${port}`
-  )
+  );
 }
