@@ -20,6 +20,8 @@
     "koa-router": "5.4.0",
     "nodemon": "1.17.2",
     "ramda": "0.25.0",
+    "request": "2.85.0",
+    "request-promise-native": "1.0.5",
     "winston": "2.4.1"
   },
   "keywords": [
